@@ -7,63 +7,309 @@
 </head>
 <body>
     <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Biodata</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aplikasi Biodata Siswa</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f9;
+      display: flex;
+      justify-content: center;
+      padding: 30px 15px;
+      margin: 0;
+    }
+    .card {
+      background: #fff;
+      padding: 25px 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 500px;
+    }
+    h2 {
+      margin-top: 0;
+      color: #333;
+      text-align: center;
+      border-bottom: 2px solid #007bff;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #444;
+    }
+    input[type="text"], 
+    input[type="number"], 
+    input[type="tel"], 
+    select, 
+    textarea {
+      width: 100%;
+      padding: 9px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+    .radio-group {
+      display: flex;
+      gap: 20px;
+      margin-top: 5px;
+    }
+    .radio-group label {
+      font-weight: normal;
+      cursor: pointer;
+    }
+    button {
+      width: 100%;
+      padding: 11px;
+      border: none;
+      border-radius: 5px;
+      font-size: 15px;
+      cursor: pointer;
+      color: white;
+      font-weight: bold;
+      transition: background-color 0.2s;
+    }
+    .btn-simpan {
+      background-color: #007bff;
+      margin-top: 10px;
+    }
+    .btn-simpan:hover {
+      background-color: #0056b3;
+    }
+    .btn-cetak {
+      background-color: #28a745;
+    }
+    .btn-cetak:hover {
+      background-color: #218838;
+    }
+    .btn-kembali {
+      background-color: #6c757d;
+    }
+    .btn-kembali:hover {
+      background-color: #5a6268;
+    }
+    
+    /* Tampilan Hasil (Default tersembunyi) */
+    #hasilContainer {
+      display: none;
+    }
+    .result-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    .result-table td {
+      padding: 8px 4px;
+      border-bottom: 1px solid #eee;
+      vertical-align: top;
+      font-size: 15px;
+    }
+    .result-table td.label {
+      font-weight: bold;
+      color: #555;
+      width: 42%;
+    }
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    /* Pengaturan Cetak PDF / Print Page */
+    @media print {
+      .button-group {
+        display: none;
+      }
+      body {
+        background-color: #fff;
+        padding: 0;
+      }
+      .card {
+        box-shadow: none;
+        max-width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
-    <form action="/action_page.php">
-  <label for="fname">name:</label>
-  <input type="text" id="fname" name="fname" value="Bunga"><br>
-  <br>
-  <label for="lname">alamat:</label>
-  <textarea type="text" id="lname" name="lname" value="kedungpedaringan"></textarea><br>
-<!DOCTYPE html>
-<html>
-<body>
 
-<label for="cars">jurusan:</label>
+  <!-- SLIDE 1: FORM INPUT BIODATA -->
+  <div id="formContainer" class="card">
+    <h2>Form Biodata Siswa</h2>
+    <form id="biodataForm">
+      
+      <!-- 1. Nama -->
+      <div class="form-group">
+        <label for="nama">1. Nama Lengkap</label>
+        <input type="text" id="nama" required placeholder="Masukkan nama lengkap">
+      </div>
 
-<select id="cars">
-  <option value="RPL">RPL</option>
-  <option value="TKJ">TKJ</option>
-  <option value="TKR">TKR</option>
-  <option value="TSM">TSM</option>
-  <option value="TEI">TEI</option>
-</select>
+      <!-- 2. Alamat -->
+      <div class="form-group">
+        <label for="alamat">2. Alamat</label>
+        <textarea id="alamat" rows="3" required placeholder="Masukkan alamat lengkap"></textarea>
+      </div>
 
-</body>
-</html>
+      <!-- 3. Jurusan -->
+      <div class="form-group">
+        <label for="jurusan">3. Jurusan</label>
+        <select id="jurusan" required>
+          <option value="">-- Pilih Jurusan --</option>
+          <option value="Rekayasa Perangkat Lunak">Rekayasa Perangkat Lunak</option>
+          <option value="Teknik Komputer & Jaringan">Teknik Komputer & Jaringan</option>
+          <option value="Multimedia">Multimedia</option>
+          <option value="Akuntansi">Akuntansi</option>
+        </select>
+      </div>
 
-</form> <form action="/action_page.php">
-  <p>jenis kelamin:</p>
-  <input type="radio" id="html" name="fav_language" value="HTML">
-  <label for="html">L</label>
-  <input type="radio" id="css" name="fav_language" value="CSS">
-  <label for="css">P</label>
-  <input type="radio" id="javascript" name="fav_language" value="JavaScript">
-  <label for="javascript">B</label>
+      <!-- 4. Jenis Kelamin -->
+      <div class="form-group">
+        <label>4. Jenis Kelamin</label>
+        <div class="radio-group">
+          <label><input type="radio" name="jenisKelamin" value="Laki-laki" required> Laki-laki</label>
+          <label><input type="radio" name="jenisKelamin" value="Perempuan" required> Perempuan</label>
+        </div>
+      </div>
 
-  <br>  
+      <!-- 5. Berat Badan -->
+      <div class="form-group">
+        <label for="beratBadan">5. Berat Badan (kg)</label>
+        <input type="number" id="beratBadan" required placeholder="Contoh: 55">
+      </div>
 
+      <!-- 6. Tinggi Badan -->
+      <div class="form-group">
+        <label for="tinggiBadan">6. Tinggi Badan (cm)</label>
+        <input type="number" id="tinggiBadan" required placeholder="Contoh: 165">
+      </div>
 
-</form>
-  <label for="fname">TB(cm):</label>
-  <input type="text" id="fname" name="fname" value="150"><br>
-  <br>
-  <label for="lname">BB (kg):</label>
-  <input type="text" id="lname" name="lname" value="47"><br><br>
-  
-   <label for="fname">hobi:</label>
-  <input type="text" id="fname" name="fname" value="scoll tiktok"><br>
-  <br>
-  <label for="lname">no.HP:</label>
-  <input type="text" id="lname" name="lname" value=><br><br>
-<input type="submit" value="simpan">
+      <!-- 7. Golongan Darah -->
+      <div class="form-group">
+        <label for="golDarah">7. Golongan Darah</label>
+        <select id="golDarah" required>
+          <option value="">-- Pilih Golongan Darah --</option>
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <option value="AB">AB</option>
+          <option value="O">O</option>
+        </select>
+      </div>
 
-</form>
+      <!-- 8. Hobi -->
+      <div class="form-group">
+        <label for="hobi">8. Hobi</label>
+        <input type="text" id="hobi" required placeholder="Contoh: Membaca, Olahraga">
+      </div>
+
+      <!-- 9. No HP -->
+      <div class="form-group">
+        <label for="noHp">9. No HP</label>
+        <input type="tel" id="noHp" required placeholder="Contoh: 08123456789">
+      </div>
+
+      <button type="submit" class="btn-simpan">Simpan Biodata</button>
+    </form>
+  </div>
+
+  <!-- SLIDE 2: HASIL BIODATA -->
+  <div id="hasilContainer" class="card">
+    <h2>Hasil Biodata Siswa</h2>
+    
+    <table class="result-table">
+      <tr>
+        <td class="label">1. Nama Lengkap</td>
+        <td>: <span id="resNama"></span></td>
+      </tr>
+      <tr>
+        <td class="label">2. Alamat</td>
+        <td>: <span id="resAlamat"></span></td>
+      </tr>
+      <tr>
+        <td class="label">3. Jurusan</td>
+        <td>: <span id="resJurusan"></span></td>
+      </tr>
+      <tr>
+        <td class="label">4. Jenis Kelamin</td>
+        <td>: <span id="resJenisKelamin"></span></td>
+      </tr>
+      <tr>
+        <td class="label">5. Berat Badan</td>
+        <td>: <span id="resBeratBadan"></span></td>
+      </tr>
+      <tr>
+        <td class="label">6. Tinggi Badan</td>
+        <td>: <span id="resTinggiBadan"></span></td>
+      </tr>
+      <tr>
+        <td class="label">7. Golongan Darah</td>
+        <td>: <span id="resGolDarah"></span></td>
+      </tr>
+      <tr>
+        <td class="label">8. Hobi</td>
+        <td>: <span id="resHobi"></span></td>
+      </tr>
+      <tr>
+        <td class="label">9. No HP</td>
+        <td>: <span id="resNoHp"></span></td>
+      </tr>
+    </table>
+
+    <div class="button-group">
+      <button type="button" class="btn-kembali" onclick="kembaliKeForm()">Edit / Isi Ulang</button>
+    </div>
+
+  <!-- LOGIKA JAVASCRIPT -->
+  <script>
+    const form = document.getElementById('biodataForm');
+    const formContainer = document.getElementById('formContainer');
+    const hasilContainer = document.getElementById('hasilContainer');
+
+    // Menangani aksi klik tombol Simpan
+    form.addEventListener('submit', function(e) {
+      e.preventDefault(); // Mencegah reload halaman
+
+      // 1. Ambil nilai data dari input
+      const nama = document.getElementById('nama').value;
+      const alamat = document.getElementById('alamat').value;
+      const jurusan = document.getElementById('jurusan').value;
+      const jenisKelamin = document.querySelector('input[name="jenisKelamin"]:checked').value;
+      const beratBadan = document.getElementById('beratBadan').value;
+      const tinggiBadan = document.getElementById('tinggiBadan').value;
+      const golDarah = document.getElementById('golDarah').value;
+      const hobi = document.getElementById('hobi').value;
+      const noHp = document.getElementById('noHp').value;
+
+      // 2. Isi nilai ke tampilan hasil
+      document.getElementById('resNama').innerText = nama;
+      document.getElementById('resAlamat').innerText = alamat;
+      document.getElementById('resJurusan').innerText = jurusan;
+      document.getElementById('resJenisKelamin').innerText = jenisKelamin;
+      document.getElementById('resBeratBadan').innerText = beratBadan + " kg";
+      document.getElementById('resTinggiBadan').innerText = tinggiBadan + " cm";
+      document.getElementById('resGolDarah').innerText = golDarah;
+      document.getElementById('resHobi').innerText = hobi;
+      document.getElementById('resNoHp').innerText = noHp;
+
+      // 3. Pindahkan tampilan dari Form ke Hasil
+      formContainer.style.display = 'none';
+      hasilContainer.style.display = 'block';
+    });
+
+    // Fungsi untuk beralih kembali ke Form jika tombol Edit diklik
+    function kembaliKeForm() {
+      hasilContainer.style.display = 'none';
+      formContainer.style.display = 'block';
+    }
+  </script>
 
 </body>
 </html>
